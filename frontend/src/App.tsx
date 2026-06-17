@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import "./App.css";
+import stiftungLogo from "./assets/Logo-Stiftung-Bildung-Bildmarke_quadratisch_RGB.png";
 
 // Nachrichtentyp für die Darstellung im Chat.
 interface Message {
@@ -24,7 +25,7 @@ function App() {
   const [messages, setMessages] = useState<Message[]>([
     {
       sender: "bot",
-      text: "Hallo! 🌻 Ich bin der Chatbot der Stiftung Bildung. Wie kann ich dir helfen?",
+      text: "Hallo! Ich bin der Chatbot der Stiftung Bildung. Wie kann ich dir helfen?",
     },
   ]);
 
@@ -102,8 +103,10 @@ function App() {
     <div className="page">
       <div className="chat-card">
         <header className="chat-header">
-          <div className="logo-badge">🌻</div>
-          <div>
+          <div className="logo-badge" aria-hidden="true">
+            <img src={stiftungLogo} alt="" />
+          </div>
+          <div className="header-copy">
             <h1>Stiftung Bildung</h1>
             <p>Chatbot &mdash; Fragen rund um unsere Arbeit</p>
           </div>
@@ -116,7 +119,11 @@ function App() {
               className={`message-row ${msg.sender === "user" ? "from-user" : "from-bot"
                 }`}
             >
-              {msg.sender === "bot" && <div className="avatar">🌻</div>}
+              {msg.sender === "bot" && (
+                <div className="avatar" aria-hidden="true">
+                  <img src={stiftungLogo} alt="" />
+                </div>
+              )}
 
               <div className="bubble">
                 <p>{msg.text}</p>
@@ -139,7 +146,9 @@ function App() {
 
           {loading && (
             <div className="message-row from-bot">
-              <div className="avatar">🌻</div>
+              <div className="avatar" aria-hidden="true">
+                <img src={stiftungLogo} alt="" />
+              </div>
               <div className="bubble typing">
                 <span className="dot" />
                 <span className="dot" />
