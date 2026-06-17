@@ -1,8 +1,9 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import knowledgeBase from "./knowledgeBase.json";
-
+import { initializeEmbeddings, createEmbedding, cosineSimilarity } from "./embedding";
 // Struktur der Wissenseinträge in knowledgeBase.json.
+
 interface KnowledgeEntry {
     keywords: string[];
     category: string;
@@ -10,6 +11,13 @@ interface KnowledgeEntry {
     source: string;
     contact?: string;
 }
+
+interface EmbeddedKnowledgeEntry extends KnowledgeEntry {
+    embedding: number[];
+    searchText: string;
+}
+
+let embeddedKnowledgeBase: EmbeddedKnowledgeEntry[] = [];
 
 // Struktur des Anfragekörpers, der vom Frontend gesendet wird.
 interface ChatRequestBody {
@@ -20,6 +28,24 @@ interface MatchResult {
     entry: KnowledgeEntry;
     score: number;
     confidence: number;
+    matchedKeywords: string[];
+}
+
+interface KeywordDebugResult {
+    category: string;
+    score: number;
+    confidence: number;
+    matchedKeywords: string[];
+    source: string;
+}
+
+interface EmbeddingDebugResult {
+    category: string;
+    embeddingScore: number;
+    keywordConfidence: number;
+    combinedScore: number;
+    matchedKeywords: string[];
+    source: string;
 }
 
 const app = express();
@@ -38,22 +64,32 @@ const FALLBACK_ENTRY: KnowledgeEntry = {
 };
 
 const MIN_CONFIDENCE = 0.1;
+const MIN_COMBINED_SCORE = 0.3;
 
-// Text normalisieren: Kleinbuchstaben, Sonderzeichen entfernen und mehrere Leerzeichen zusammenfassen.
+// Gewichtung für die semantische Suche:
+// Embeddings tragen den Hauptteil, Keyword-Treffer geben bei exakten Begriffen einen Bonus.
+const KEYWORD_WEIGHT = 0.25;
+const EMBEDDING_WEIGHT = 0.75;
+
+// Text normalisieren: Kleinbuchstaben, Umlaute/Diakritika vereinheitlichen,
+// Satzzeichen entfernen und mehrere Leerzeichen zusammenfassen.
 function normalizeText(text: string): string {
     return text
         .toLowerCase()
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "")
         .replace(/[^\p{L}\p{N}\s]/gu, " ")
         .replace(/\s+/g, " ")
         .trim();
 }
 
-// Bestimmt den Score eines Eintrags anhand der Schlüsselwörter.
-function getKeywordScore(message: string, keywords: string[]): number {
+// Sammelt alle Keywords eines Wissenseintrags, die in der Nutzerfrage vorkommen.
+// Mehrwort-Keywords werden als Phrase gesucht, einzelne Wörter als exaktes Wort.
+function getMatchedKeywords(message: string, keywords: string[]): string[] {
     const normalizedMessage = normalizeText(message);
     const words = normalizedMessage.split(" ");
 
-    let score = 0;
+    const matchedKeywords: string[] = [];
 
     for (const keyword of keywords) {
         const normalizedKeyword = normalizeText(keyword);
@@ -69,13 +105,27 @@ function getKeywordScore(message: string, keywords: string[]): number {
             : words.includes(normalizedKeyword);
 
         if (matches) {
-            score += 100 + normalizedKeyword.length;
+            matchedKeywords.push(keyword);
         }
     }
 
-    return score;
+    return matchedKeywords;
 }
 
+// Bewertet gefundene Keywords. Längere Keywords zählen etwas stärker als kurze Wörter.
+function getKeywordScoreFromMatches(matchedKeywords: string[]): number {
+    return matchedKeywords.reduce((score, keyword) => {
+        const normalizedKeyword = normalizeText(keyword);
+        return score + 100 + normalizedKeyword.length;
+    }, 0);
+}
+
+// Hilfsfunktion für einfache Score-Abfragen ohne zusätzliche Match-Details.
+function getKeywordScore(message: string, keywords: string[]): number {
+    return getKeywordScoreFromMatches(getMatchedKeywords(message, keywords));
+}
+
+// Maximal möglicher Keyword-Score eines Eintrags, um daraus eine Confidence zu berechnen.
 function getMaxKeywordScore(keywords: string[]): number {
     return keywords.reduce((sum, keyword) => {
         const normalizedKeyword = normalizeText(keyword);
@@ -88,20 +138,25 @@ function getMaxKeywordScore(keywords: string[]): number {
     }, 0);
 }
 
+// Findet den besten reinen Keyword-Treffer.
+// Diese Treffer haben Vorrang, damit klare Begriffe wie "Datenschutz" stabil bleiben.
 function getBestMatch(message: string): MatchResult | null {
     let bestEntry: KnowledgeEntry | null = null;
     let bestScore = 0;
+    let bestMatchedKeywords: string[] = [];
 
     for (const entry of knowledgeBase as KnowledgeEntry[]) {
         if (!entry.keywords) {
             continue;
         }
 
-        const score = getKeywordScore(message, entry.keywords);
+        const matchedKeywords = getMatchedKeywords(message, entry.keywords);
+        const score = getKeywordScoreFromMatches(matchedKeywords);
 
         if (score > bestScore) {
             bestScore = score;
             bestEntry = entry;
+            bestMatchedKeywords = matchedKeywords;
         }
     }
 
@@ -116,15 +171,46 @@ function getBestMatch(message: string): MatchResult | null {
         entry: bestEntry,
         score: bestScore,
         confidence: Number(confidence.toFixed(2)),
+        matchedKeywords: bestMatchedKeywords,
     };
 }
 
-app.post("/chat", (req: Request<{}, {}, ChatRequestBody>, res: Response) => {
+// Erstellt Debug-Daten für das Terminal-Logging.
+// Damit sieht man, welche Kategorien über Keywords wie stark gewichtet wurden.
+function getKeywordDebugResults(message: string): KeywordDebugResult[] {
+    return (knowledgeBase as KnowledgeEntry[])
+        .map((entry) => {
+            const matchedKeywords = getMatchedKeywords(message, entry.keywords);
+            const score = getKeywordScoreFromMatches(matchedKeywords);
+            const maxScore = getMaxKeywordScore(entry.keywords);
+            const confidence = maxScore > 0 ? score / maxScore : 0;
+
+            return {
+                category: entry.category,
+                score,
+                confidence: Number(confidence.toFixed(2)),
+                matchedKeywords,
+                source: entry.source,
+            };
+        })
+        .sort((a, b) => b.score - a.score);
+}
+
+// Baut den Text, der als Embedding gespeichert wird.
+// Keywords und Antwort werden kombiniert, damit Synonyme und natürliche Fragen besser passen.
+function createSearchText(entry: KnowledgeEntry): string {
+    return [
+        entry.category,
+        ...entry.keywords,
+        entry.answer,
+    ].join(". ");
+}
+
+app.post("/chat", async (req: Request<{}, {}, ChatRequestBody>, res: Response) => {
     console.log("Anfrage erhalten:", req.body);
 
     const userMessage = req.body.message;
 
-    // Validierung der Eingabe: leere Nachrichten sind nicht erlaubt.
     if (!userMessage || userMessage.trim() === "") {
         return res.status(400).json({
             answer: "Bitte gib eine Nachricht ein.",
@@ -133,17 +219,95 @@ app.post("/chat", (req: Request<{}, {}, ChatRequestBody>, res: Response) => {
         });
     }
 
-    // Wissensbasis nach der besten Übereinstimmung durchsuchen.
-    const matchResult = getBestMatch(userMessage);
-    const isConfidentMatch =
-        matchResult !== null && matchResult.confidence >= MIN_CONFIDENCE;
-    const match = isConfidentMatch ? matchResult.entry : FALLBACK_ENTRY;
+    const keywordScores = getKeywordDebugResults(userMessage);
 
-    console.log("Match-Ergebnis:", {
+    console.log("Keyword-Gewichtung:", {
+        question: userMessage,
+        threshold: MIN_CONFIDENCE,
+        topMatches: keywordScores.slice(0, 5),
+    });
+
+    const keywordMatch = getBestMatch(userMessage);
+
+    if (keywordMatch && keywordMatch.score > 0) {
+        console.log("Keyword-Ergebnis:", {
+            question: userMessage,
+            category: keywordMatch.entry.category,
+            score: keywordMatch.score,
+            confidence: keywordMatch.confidence,
+            matchedKeywords: keywordMatch.matchedKeywords,
+            source: keywordMatch.entry.source,
+        });
+
+        return res.json({
+            answer: keywordMatch.entry.answer,
+            source: keywordMatch.entry.source,
+            contact: keywordMatch.entry.contact,
+            confidence: keywordMatch.confidence,
+            matchType: "keyword",
+        });
+    }
+
+    // Wenn kein Keyword passt, übernimmt die semantische Suche über Embeddings.
+    const userEmbedding = await createEmbedding(userMessage);
+
+    let bestMatch: EmbeddedKnowledgeEntry | null = null;
+    let bestCombinedScore = -1;
+    let bestEmbeddingScore = -1;
+    let bestKeywordConfidence = 0;
+    let bestMatchedKeywords: string[] = [];
+    const embeddingScores: EmbeddingDebugResult[] = [];
+
+    for (const entry of embeddedKnowledgeBase) {
+        const embeddingScore = cosineSimilarity(userEmbedding, entry.embedding);
+        const matchedKeywords = getMatchedKeywords(userMessage, entry.keywords);
+        const keywordScore = getKeywordScoreFromMatches(matchedKeywords);
+        const maxKeywordScore = getMaxKeywordScore(entry.keywords);
+        const keywordConfidence = maxKeywordScore > 0 ? keywordScore / maxKeywordScore : 0;
+        const combinedScore =
+            embeddingScore * EMBEDDING_WEIGHT +
+            Math.min(keywordConfidence, 1) * KEYWORD_WEIGHT;
+
+        embeddingScores.push({
+            category: entry.category,
+            embeddingScore: Number(embeddingScore.toFixed(4)),
+            keywordConfidence: Number(keywordConfidence.toFixed(4)),
+            combinedScore: Number(combinedScore.toFixed(4)),
+            matchedKeywords,
+            source: entry.source,
+        });
+
+        if (combinedScore > bestCombinedScore) {
+            bestCombinedScore = combinedScore;
+            bestEmbeddingScore = embeddingScore;
+            bestKeywordConfidence = keywordConfidence;
+            bestMatchedKeywords = matchedKeywords;
+            bestMatch = entry;
+        }
+    }
+
+    embeddingScores.sort((a, b) => b.combinedScore - a.combinedScore);
+
+    const isConfidentMatch = bestMatch !== null && bestCombinedScore >= MIN_COMBINED_SCORE;
+    const match: KnowledgeEntry = isConfidentMatch && bestMatch ? bestMatch : FALLBACK_ENTRY;
+
+    console.log("Semantische Gewichtung:", {
+        question: userMessage,
+        threshold: MIN_COMBINED_SCORE,
+        weights: {
+            embedding: EMBEDDING_WEIGHT,
+            keyword: KEYWORD_WEIGHT,
+        },
+        topMatches: embeddingScores.slice(0, 5),
+    });
+
+    console.log("Such-Ergebnis:", {
         question: userMessage,
         category: match.category,
-        confidence: matchResult?.confidence ?? 0,
-        score: matchResult?.score ?? 0,
+        combinedScore: Number(bestCombinedScore.toFixed(4)),
+        embeddingScore: Number(bestEmbeddingScore.toFixed(4)),
+        keywordConfidence: Number(bestKeywordConfidence.toFixed(4)),
+        matchedKeywords: bestMatchedKeywords,
         usedFallback: !isConfidentMatch,
         source: match.source,
     });
@@ -152,10 +316,33 @@ app.post("/chat", (req: Request<{}, {}, ChatRequestBody>, res: Response) => {
         answer: match.answer,
         source: match.source,
         contact: match.contact,
+        confidence: Number(bestCombinedScore.toFixed(4)),
+        matchType: isConfidentMatch ? "semantic" : "fallback",
     });
 });
 
+
 // Backend-Server auf Port 3001 starten.
-app.listen(3001, () => {
-    console.log("Backend läuft auf http://localhost:3001");
-});
+async function startServer() {
+    await initializeEmbeddings();
+
+    // Beim Start werden alle Wissenseinträge einmal vektorisiert.
+    // Dadurch muss pro Anfrage nur noch die Nutzerfrage neu eingebettet werden.
+    embeddedKnowledgeBase = await Promise.all(
+        knowledgeBase.map(async (entry) => {
+            const searchText = createSearchText(entry);
+
+            return {
+                ...entry,
+                searchText,
+                embedding: await createEmbedding(searchText),
+            };
+        })
+    );
+
+    app.listen(3001, () => {
+        console.log("Server läuft auf Port 3001");
+    });
+}
+
+startServer();

@@ -1,13 +1,13 @@
-@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:wght@400;600&display=swap");
-
 :root {
-  --blue-deep: #1d3461;
-  --blue-mid: #2f5d9c;
+  /* Markenfarben und Grundwerte der Chatbot-Oberfläche */
+  --brand-teal: #009aaf;
+  --brand-green: #99cc01;
+  --brand-orange: #eb680d;
   --sun-yellow: #fbb913;
-  --sun-orange: #f7941d;
   --cream: #fdf8ef;
   --bot-bubble: #fff4d9;
   --border: #ecdfc4;
+  --font-main: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
 * {
@@ -16,7 +16,7 @@
 
 body {
   margin: 0;
-  font-family: "Nunito Sans", sans-serif;
+  font-family: var(--font-main);
 }
 
 .page {
@@ -29,13 +29,14 @@ body {
 }
 
 .chat-card {
+  /* Fester Chat-Rahmen für Desktop, auf Mobile bleibt die Höhe responsiv begrenzt */
   width: 100%;
   max-width: 480px;
   height: 640px;
   max-height: 90vh;
   background: #ffffff;
   border-radius: 24px;
-  box-shadow: 0 12px 40px rgba(29, 52, 97, 0.12);
+  box-shadow: 0 12px 40px rgba(0, 154, 175, 0.14);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -81,7 +82,7 @@ body {
 
 /* Header */
 .chat-header {
-  background: var(--blue-deep);
+  background: var(--brand-teal);
   color: #ffffff;
   padding: 18px 20px;
   display: flex;
@@ -90,12 +91,14 @@ body {
 }
 
 .header-copy {
+  /* Gleicht das Logo links aus, damit der Header-Text optisch mittig steht */
   flex: 1;
   text-align: center;
   padding-right: 58px;
 }
 
 .logo-badge {
+  /* Weißer Hintergrund, damit das quadratische Stiftung-Bildung-Logo lesbar bleibt */
   width: 44px;
   height: 44px;
   border-radius: 12px;
@@ -118,7 +121,7 @@ body {
 
 .chat-header h1 {
   margin: 0;
-  font-family: "Fredoka", sans-serif;
+  font-family: var(--font-main);
   font-size: 1.15rem;
   font-weight: 600;
 }
@@ -126,7 +129,7 @@ body {
 .chat-header p {
   margin: 2px 0 0;
   font-size: 0.78rem;
-  color: #cfdcf5;
+  color: #e6fbff;
 }
 
 @media (max-width: 600px) {
@@ -187,14 +190,16 @@ body {
 }
 
 .from-bot .bubble {
+  /* Antworten des Bots bleiben hell, damit Quellenbutton und Text gut lesbar sind */
   background: var(--bot-bubble);
   border: 1px solid var(--border);
-  color: var(--blue-deep);
+  color: #24343a;
   border-bottom-left-radius: 4px;
 }
 
 .from-user .bubble {
-  background: var(--blue-mid);
+  /* Nutzerfragen verwenden das gewünschte Stiftung-Bildung-Grün */
+  background: var(--brand-green);
   color: #ffffff;
   border-bottom-right-radius: 4px;
 }
@@ -206,7 +211,7 @@ body {
 }
 
 .meta a {
-  color: var(--blue-mid);
+  color: var(--brand-orange);
   font-weight: 600;
   text-decoration: none;
 }
@@ -216,7 +221,7 @@ body {
   margin-top: 8px;
   font-size: 0.78rem;
   font-weight: 600;
-  color: var(--sun-orange);
+  color: var(--brand-orange);
   text-decoration: none;
 }
 
@@ -235,7 +240,7 @@ body {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--sun-orange);
+  background: var(--brand-orange);
   animation: bounce 1.2s infinite ease-in-out;
 }
 
@@ -266,21 +271,22 @@ body {
   border-radius: 999px;
   border: 1px solid var(--border);
   font-size: 0.9rem;
-  font-family: "Nunito Sans", sans-serif;
+  font-family: var(--font-main);
   outline: none;
   transition: border-color 0.15s;
 }
 
 .chat-input input:focus {
-  border-color: var(--sun-orange);
+  border-color: var(--brand-orange);
 }
 
 .chat-input button {
+  /* Senden-Button in Orange passend zu den Quellenlinks */
   width: 44px;
   height: 44px;
   border-radius: 50%;
   border: none;
-  background: var(--sun-orange);
+  background: var(--brand-orange);
   color: #ffffff;
   font-size: 1.1rem;
   cursor: pointer;
@@ -292,7 +298,7 @@ body {
 }
 
 .chat-input button:hover:not(:disabled) {
-  background: var(--blue-mid);
+  background: #d85d0a;
 }
 
 .chat-input button:active:not(:disabled) {
@@ -305,11 +311,12 @@ body {
 }
 
 .source-button {
+  /* Externe Quellen sollen als klare Aktion sichtbar sein */
   display: inline-block;
   margin-top: 14px;
   padding: 9px 14px;
   border-radius: 999px;
-  background: #ff9800;
+  background: var(--brand-orange);
   color: white;
   font-weight: 700;
   text-decoration: none;

@@ -4,7 +4,35 @@
     "expectedSource": "https://www.stiftungbildung.org/spenden/"
   },
   {
+    "question": "Wie kann ich euch finanziell helfen?",
+    "expectedSource": "https://www.stiftungbildung.org/spenden/"
+  },
+  {
+    "question": "Wie kann ich euch finanziell ünterstützen?",
+    "expectedSource": "https://www.stiftungbildung.org/spenden/"
+  },
+  {
+    "question": "Wie kann ich euch finanziell assistieren?",
+    "expectedSource": "https://www.stiftungbildung.org/spenden/"
+  },
+  {
+    "question": "Wie kann ich euch finanziell beistehen?",
+    "expectedSource": "https://www.stiftungbildung.org/spenden/"
+  },
+  {
+    "question": "Wie kann ich euch finanziell fördern?",
+    "expectedSource": "https://www.stiftungbildung.org/spenden/"
+  },
+  {
+    "question": "Wie kann ich euch finanziell unter die Arme greifen?",
+    "expectedSource": "https://www.stiftungbildung.org/spenden/"
+  },
+  {
     "question": "Kann ich meine Spende von der Steuer absetzen?",
+    "expectedSource": "https://www.stiftungbildung.org/spenden/"
+  },
+  {
+    "question": "Bekomme ich eine Spendenquittung für die Steuererklärung?",
     "expectedSource": "https://www.stiftungbildung.org/spenden/"
   },
   {
@@ -12,7 +40,15 @@
     "expectedSource": "https://www.stiftungbildung.org/foerderfonds/"
   },
   {
+    "question": "Kann ich einen Zuschuss für ein Schulprojekt bekommen?",
+    "expectedSource": "https://www.stiftungbildung.org/foerderfonds/"
+  },
+  {
     "question": "Was wird von den Förderfonds nicht unterstützt?",
+    "expectedSource": "https://www.stiftungbildung.org/foerderfonds/"
+  },
+  {
+    "question": "Was ist bei euch nicht förderfähig?",
     "expectedSource": "https://www.stiftungbildung.org/foerderfonds/"
   },
   {
@@ -24,7 +60,15 @@
     "expectedSource": "https://www.stiftungbildung.org/kontakt/"
   },
   {
+    "question": "Wie erreiche ich euch telefonisch oder per Mail?",
+    "expectedSource": "https://www.stiftungbildung.org/kontakt/"
+  },
+  {
     "question": "Wer ist mein Ansprechpartner im Team?",
+    "expectedSource": "https://www.stiftungbildung.org/ueber-uns/team/"
+  },
+  {
+    "question": "Welche Ansprechperson ist für mich zuständig?",
     "expectedSource": "https://www.stiftungbildung.org/ueber-uns/team/"
   },
   {
@@ -32,7 +76,19 @@
     "expectedSource": "https://www.stiftungbildung.org/datenschutz/"
   },
   {
+    "question": "Wie verarbeitet ihr personenbezogene Daten?",
+    "expectedSource": "https://www.stiftungbildung.org/datenschutz/"
+  },
+  {
     "question": "Was ist die Stiftung Bildung überhaupt?",
+    "expectedSource": "https://www.stiftungbildung.org/ziel-zweck-vision/"
+  },
+  {
+    "question": "Über was geht die Stiftung Bildung?",
+    "expectedSource": "https://www.stiftungbildung.org/ziel-zweck-vision/"
+  },
+  {
+    "question": "Hey kannst du mir sagen was die Stiftung macht?",
     "expectedSource": "https://www.stiftungbildung.org/ziel-zweck-vision/"
   },
   {
@@ -40,7 +96,27 @@
     "expectedSource": "https://www.stiftungbildung.org/ziel-zweck-vision/"
   },
   {
+    "question": "Wie lange gibt es die Stiftung Bildung schon?",
+    "expectedSource": "https://www.stiftungbildung.org/transparenz/"
+  },
+  {
+    "question": "Seit wann existiert die Stiftung Bildung?",
+    "expectedSource": "https://www.stiftungbildung.org/transparenz/"
+  },
+  {
+    "question": "Wann wurde die Stiftung Bildung gegründet?",
+    "expectedSource": "https://www.stiftungbildung.org/transparenz/"
+  },
+  {
+    "question": "Wie alt ist die Stiftung Bildung?",
+    "expectedSource": "https://www.stiftungbildung.org/transparenz/"
+  },
+  {
     "question": "Wie kann ich eine Patenschaft für ein Kind übernehmen?",
+    "expectedSource": "https://www.stiftungbildung.org/patenschaften/"
+  },
+  {
+    "question": "Kann ich Mentor oder Patin werden?",
     "expectedSource": "https://www.stiftungbildung.org/patenschaften/"
   },
   {
@@ -48,7 +124,15 @@
     "expectedSource": "https://www.stiftungbildung.org/foerderung/"
   },
   {
+    "question": "Welche Angebote und Initiativen habt ihr?",
+    "expectedSource": "https://www.stiftungbildung.org/foerderung/"
+  },
+  {
     "question": "Wo finde ich das Impressum?",
+    "expectedSource": "https://www.stiftungbildung.org/impressum/"
+  },
+  {
+    "question": "Wo stehen eure rechtlichen Angaben und die Anschrift?",
     "expectedSource": "https://www.stiftungbildung.org/impressum/"
   },
   {
@@ -56,7 +140,15 @@
     "expectedSource": "https://www.stiftungbildung.org/transparenz/"
   },
   {
+    "question": "Kann man euch vertrauen und seid ihr transparent?",
+    "expectedSource": "https://www.stiftungbildung.org/transparenz/"
+  },
+  {
     "question": "Kann ich mich ehrenamtlich engagieren?",
+    "expectedSource": "https://engagiert.stiftungbildung.org/"
+  },
+  {
+    "question": "Wie kann ich freiwillig mithelfen, ohne Geld zu spenden?",
     "expectedSource": "https://engagiert.stiftungbildung.org/"
   },
   {
