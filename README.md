@@ -1,6 +1,6 @@
 # Stiftung Bildung Chatbot
 
-Dieses Projekt ist ein einfacher Chatbot fuer die Stiftung Bildung. Das Frontend stellt eine Chat-Oberflaeche bereit, das Backend beantwortet Fragen anhand einer lokalen Wissensbasis (`knowledgeBase.json`).
+Dieses Projekt ist ein einfacher Chatbot für die Stiftung Bildung. Das Frontend stellt eine Chat-Oberflaeche bereit, das Backend beantwortet Fragen anhand einer lokalen Wissensbasis (`knowledgeBase.json`).
 
 Der aktuelle Stand ist ein regelbasierter Prototyp: Es wird keine KI-API verwendet. Stattdessen sucht das Backend nach passenden Schluesselwoertern in der Wissensbasis und gibt die beste Antwort mit Quelle und optionaler Kontaktadresse zurueck.
 
