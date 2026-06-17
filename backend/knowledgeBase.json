@@ -1,0 +1,198 @@
+[
+    {
+        "keywords": [
+            "spenden",
+            "spende",
+            "geld"
+        ],
+        "category": "spenden",
+        "answer": "Informationen zum Spenden findest du auf der Website der Stiftung Bildung im Bereich Spenden.",
+        "source": "https://www.stiftungbildung.org/spenden/"
+    },
+    {
+        "keywords": [
+            "förderung",
+            "förderanfrage",
+            "projekt fördern"
+        ],
+        "category": "foerderung",
+        "answer": "Für individuelle Förderanfragen solltest du die Stiftung Bildung direkt kontaktieren.",
+        "contact": "foerderanfrage@stiftungbildung.org",
+        "source": "https://www.stiftungbildung.org/kontakt/"
+    },
+    {
+        "keywords": [
+            "kontakt",
+            "telefon",
+            "email"
+        ],
+        "category": "kontakt",
+        "answer": "Die allgemeinen Kontaktinformationen findest du auf der Kontaktseite der Stiftung Bildung.",
+        "source": "https://www.stiftungbildung.org/kontakt/"
+    },
+    {
+        "keywords": [
+            "team",
+            "ansprechpartner",
+            "person"
+        ],
+        "category": "team",
+        "answer": "Für konkrete Ansprechpartner:innen kannst du die Team-Seite der Stiftung Bildung nutzen.",
+        "source": "https://www.stiftungbildung.org/ueber-uns/team/"
+    },
+    {
+        "keywords": [
+            "datenschutz",
+            "daten"
+        ],
+        "category": "datenschutz",
+        "answer": "Informationen zum Datenschutz findest du auf der Datenschutzseite der Stiftung Bildung.",
+        "contact": "datenschutz@stiftungbildung.org",
+        "source": "https://www.stiftungbildung.org/datenschutz/"
+    },
+    {
+        "keywords": [
+            "was ist die stiftung bildung",
+            "definition stiftung bildung"
+        ],
+        "category": "ueber_uns",
+        "answer": "Die Stiftung Bildung ist eine rechtsfähige Stiftung des bürgerlichen Rechts und eine gemeinnützige Spendenorganisation. Sie wirkt bundesweit als Themenanwältin für beste Bildung, stärkt das Bildungsengagement sowie Kita- und Schulfördervereine, fördert Partizipation und Vielfalt und ist überparteilich sowie unabhängig.",
+        "source": "https://www.stiftungbildung.org/ziel-zweck-vision/"
+    },
+    {
+        "keywords": [
+            "was ist die stiftung",
+            "über die stiftung",
+            "wer seid ihr",
+            "vorstellen"
+        ],
+        "category": "ueber_uns",
+        "answer": "Die Stiftung Bildung ist eine gemeinnützige, überparteiliche und unabhängige Stiftung bürgerlichen Rechts. Ihr Ziel ist es, beste Bildungschancen für Kinder und Jugendliche in Deutschland zu schaffen - vor allem durch die Unterstützung von Kita- und Schulfördervereinen.",
+        "source": "https://www.stiftungbildung.org/ziel-zweck-vision/"
+    },
+    {
+        "keywords": [
+            "vision",
+            "leitbild",
+            "zweck",
+            "ziel"
+        ],
+        "category": "ueber_uns",
+        "answer": "Unsere Vision ist es, beste Bildungschancen für Kinder und Jugendliche zu schaffen. Dafür stärken wir Partizipation und Vielfalt in der Bildung und unterstützen ein bundesweites Netzwerk aus Kita- und Schulfördervereinen.",
+        "source": "https://www.stiftungbildung.org/ziel-zweck-vision/"
+    },
+    {
+        "keywords": [
+            "förderfonds",
+            "förderung",
+            "fördermittel",
+            "antrag",
+            "beantragen",
+            "schulprojekt",
+            "projektförderung",
+            "geld beantragen",
+            "förderung beantragen",
+            "schulprojekt beantragen",
+            "förderung schulprojekt"
+        ],
+        "category": "foerderung",
+        "answer": "Über unsere Förderfonds können Kita- und Schulfördervereine Fördermittel von bis zu 5.000 Euro für eigene Projektideen beantragen - z.B. zu Themen wie Klimaschutz, Demokratie, Vielfalt oder Persönlichkeitsentwicklung. Anträge stellen Kinder, Eltern, Lehrkräfte oder Schulleitungen gemeinsam mit ihrem Förderverein.",
+        "source": "https://www.stiftungbildung.org/foerderfonds/"
+    },
+    {
+        "keywords": [
+            "was wird nicht gefördert",
+            "förderkriterien",
+            "ausschlusskriterien"
+        ],
+        "category": "foerderung",
+        "answer": "Nicht gefördert werden zum Beispiel reine Materialbeschaffung, Neubau- oder Umbaumaßnahmen ohne Beteiligung von Kindern, Übernachtungskosten, Honorare, Wirtschaftsunternehmen sowie Doppel- oder Mehrfachförderungen.",
+        "source": "https://www.stiftungbildung.org/foerderfonds/"
+    },
+    {
+        "keywords": [
+            "patenschaft",
+            "pate werden",
+            "patenschaften",
+            "kind zu kind"
+        ],
+        "category": "patenschaften",
+        "answer": "Bei den Chancenpatenschaften der Stiftung Bildung lernen sich Kinder und Jugendliche gegenseitig kennen und unterstützen sich - vor allem dort, wo Eltern wenig unterstützen können. Seit 2016 wurden so über 40.000 Kinder und Jugendliche gefördert.",
+        "source": "https://www.stiftungbildung.org/patenschaften/"
+    },
+    {
+        "keywords": [
+            "spenden",
+            "spende",
+            "geld spenden",
+            "wie kann ich spenden",
+            "unterstützen",
+            "spendenkonto"
+        ],
+        "category": "spenden",
+        "answer": "Du kannst per Online-Spendenformular oder per Überweisung an unser Spendenkonto spenden: GLS Bank, IBAN DE43 4306 0967 1143 9289 01, BIC GENODEM1GLS, Verwendungszweck 'Spende für Bildung'. Schon ab 50 Euro im Monat hilfst du uns, unabhängig zu bleiben.",
+        "source": "https://www.stiftungbildung.org/spenden/"
+    },
+    {
+        "keywords": [
+            "spende absetzen",
+            "steuer",
+            "spendenbescheinigung",
+            "zuwendungsbestätigung"
+        ],
+        "category": "spenden",
+        "answer": "Da die Stiftung Bildung gemeinnützig ist, kannst du deine Spende steuerlich absetzen. Bei Spenden unter 300 Euro reicht der Zahlungsbeleg zusammen mit dem vereinfachten Zuwendungsnachweis. Für eine Spendenbescheinigung schick uns einfach deine Adresse.",
+        "contact": "spenden@stiftungbildung.org",
+        "source": "https://www.stiftungbildung.org/spenden/"
+    },
+    {
+        "keywords": [
+            "projekte",
+            "programme",
+            "was macht ihr",
+            "angebote",
+            "youstartn",
+            "youclub"
+        ],
+        "category": "programme",
+        "answer": "Die Stiftung Bildung unterstützt u.a. Chancenpatenschaften zwischen Kindern, Förderfonds für Kita- und Schulprojekte (z.B. Klimaschutz, Demokratie, Vielfalt), den Förderpreis 'Verein(t) für gute Kita und Schule' sowie die Programme youstartN und youclub.",
+        "source": "https://www.stiftungbildung.org/foerderung/"
+    },
+    {
+        "keywords": [
+            "impressum",
+            "rechtliches",
+            "anbieter",
+            "betreiber",
+            "anschrift"
+        ],
+        "category": "rechtliches",
+        "answer": "Alle rechtlichen Angaben zur Stiftung Bildung - wie Anschrift, Vertretung und Registereintrag - findest du in unserem Impressum.",
+        "source": "https://www.stiftungbildung.org/impressum/"
+    },
+    {
+        "keywords": [
+            "spendensiegel",
+            "transparenz",
+            "vertrauen",
+            "seriös",
+            "dzi",
+            "phineo"
+        ],
+        "category": "transparenz",
+        "answer": "Die Stiftung Bildung wurde mit dem DZI-Spendensiegel sowie dem PHINEO 'Wirkt-Siegel' ausgezeichnet und hat die Selbstverpflichtungserklärung der Initiative Transparente Zivilgesellschaft (ITZ) unterzeichnet.",
+        "source": "https://www.stiftungbildung.org/transparenz/"
+    },
+    {
+        "keywords": [
+            "mitmachen",
+            "ehrenamt",
+            "engagieren",
+            "freiwillig",
+            "helfen ohne geld"
+        ],
+        "category": "ehrenamt",
+        "answer": "Du kannst dich auch ohne Geld ehrenamtlich engagieren - zum Beispiel über unser Mitmach-Portal 'Engagiert' oder im Bereich Ehrenamt. Jede helfende Hand zählt!",
+        "source": "https://engagiert.stiftungbildung.org/"
+    }
+]

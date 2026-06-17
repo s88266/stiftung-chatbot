@@ -1,0 +1,70 @@
+[
+  {
+    "question": "Wie kann ich für Bildung spenden?",
+    "expectedSource": "https://www.stiftungbildung.org/spenden/"
+  },
+  {
+    "question": "Kann ich meine Spende von der Steuer absetzen?",
+    "expectedSource": "https://www.stiftungbildung.org/spenden/"
+  },
+  {
+    "question": "Wie kann ich eine Förderung für mein Schulprojekt beantragen?",
+    "expectedSource": "https://www.stiftungbildung.org/foerderfonds/"
+  },
+  {
+    "question": "Was wird von den Förderfonds nicht unterstützt?",
+    "expectedSource": "https://www.stiftungbildung.org/foerderfonds/"
+  },
+  {
+    "question": "Ich habe eine individuelle Förderanfrage, an wen wende ich mich?",
+    "expectedSource": "https://www.stiftungbildung.org/kontakt/"
+  },
+  {
+    "question": "Wie kann ich euch kontaktieren?",
+    "expectedSource": "https://www.stiftungbildung.org/kontakt/"
+  },
+  {
+    "question": "Wer ist mein Ansprechpartner im Team?",
+    "expectedSource": "https://www.stiftungbildung.org/ueber-uns/team/"
+  },
+  {
+    "question": "Was passiert mit meinen Daten?",
+    "expectedSource": "https://www.stiftungbildung.org/datenschutz/"
+  },
+  {
+    "question": "Was ist die Stiftung Bildung überhaupt?",
+    "expectedSource": "https://www.stiftungbildung.org/ziel-zweck-vision/"
+  },
+  {
+    "question": "Was ist eure Vision?",
+    "expectedSource": "https://www.stiftungbildung.org/ziel-zweck-vision/"
+  },
+  {
+    "question": "Wie kann ich eine Patenschaft für ein Kind übernehmen?",
+    "expectedSource": "https://www.stiftungbildung.org/patenschaften/"
+  },
+  {
+    "question": "Welche Projekte und Programme gibt es bei euch?",
+    "expectedSource": "https://www.stiftungbildung.org/foerderung/"
+  },
+  {
+    "question": "Wo finde ich das Impressum?",
+    "expectedSource": "https://www.stiftungbildung.org/impressum/"
+  },
+  {
+    "question": "Habt ihr ein Spendensiegel?",
+    "expectedSource": "https://www.stiftungbildung.org/transparenz/"
+  },
+  {
+    "question": "Kann ich mich ehrenamtlich engagieren?",
+    "expectedSource": "https://engagiert.stiftungbildung.org/"
+  },
+  {
+    "question": "Wie ist das Wetter heute in Berlin?",
+    "expectedSource": "https://www.stiftungbildung.org/kontakt/"
+  },
+  {
+    "question": "asdfghjkl zufallstext 12345",
+    "expectedSource": "https://www.stiftungbildung.org/kontakt/"
+  }
+]
