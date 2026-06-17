@@ -110,6 +110,8 @@ Backend und Frontend können gemeinsam aus dem Projekt-Root gestartet werden:
 npm run dev
 ```
 
+Während der Entwicklung werden Änderungen automatisch übernommen: Das Backend startet bei Änderungen an TypeScript- oder JSON-Dateien über `nodemon` neu, das Frontend aktualisiert sich über Vite Hot Reload.
+
 Alternativ kann man die beiden Teile einzeln starten. Zuerst das Backend:
 
 ```bash

@@ -1,19 +1,39 @@
 import { spawn } from "node:child_process";
 
-const npmCommand = process.platform === "win32" ? "npm.cmd" : "npm";
+const isWindows = process.platform === "win32";
+
+function createNpmCommand(args) {
+  if (isWindows) {
+    return [
+      {
+        command: "npm.cmd",
+        args,
+      },
+      {
+        command: "cmd.exe",
+        args: ["/d", "/s", "/c", ["npm", ...args].join(" ")],
+      },
+    ];
+  }
+
+  return [
+    {
+      command: "npm",
+      args,
+    },
+  ];
+}
 
 const services = [
   {
     name: "backend",
     color: "\x1b[36m",
-    command: npmCommand,
-    args: ["--prefix", "backend", "run", "dev"],
+    commands: createNpmCommand(["--prefix", "backend", "run", "dev"]),
   },
   {
     name: "frontend",
     color: "\x1b[32m",
-    command: npmCommand,
-    args: ["--prefix", "frontend", "run", "dev"],
+    commands: createNpmCommand(["--prefix", "frontend", "run", "dev"]),
   },
 ];
 
@@ -41,16 +61,43 @@ function stopAll(signal = "SIGTERM") {
 }
 
 for (const service of services) {
-  const child = spawn(service.command, service.args, {
-    cwd: process.cwd(),
-    env: process.env,
-    stdio: ["inherit", "pipe", "pipe"],
-  });
+  let child;
+  let lastError;
+
+  for (const candidate of service.commands) {
+    try {
+      child = spawn(candidate.command, candidate.args, {
+        cwd: process.cwd(),
+        env: process.env,
+        stdio: ["ignore", "pipe", "pipe"],
+        windowsHide: true,
+      });
+      break;
+    } catch (error) {
+      lastError = error;
+    }
+  }
+
+  if (!child) {
+    console.error(
+      `${service.color}[${service.name}]${resetColor} could not start: ${lastError.message}`
+    );
+    stopAll();
+    process.exit(1);
+  }
 
   children.push(child);
 
   child.stdout.on("data", (data) => prefixOutput(service, data, process.stdout));
   child.stderr.on("data", (data) => prefixOutput(service, data, process.stderr));
+
+  child.on("error", (error) => {
+    console.error(
+      `${service.color}[${service.name}]${resetColor} could not start: ${error.message}`
+    );
+    stopAll();
+    process.exitCode = 1;
+  });
 
   child.on("exit", (code, signal) => {
     if (code && code !== 0) {
