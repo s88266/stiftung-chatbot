@@ -104,7 +104,13 @@ npm install
 
 ## Entwicklung starten
 
-Zuerst das Backend starten:
+Backend und Frontend können gemeinsam aus dem Projekt-Root gestartet werden:
+
+```bash
+npm run dev
+```
+
+Alternativ kann man die beiden Teile einzeln starten. Zuerst das Backend:
 
 ```bash
 cd backend
