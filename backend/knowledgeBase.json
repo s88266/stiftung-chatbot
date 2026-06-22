@@ -36,6 +36,11 @@
             "erreichen",
             "anrufen",
             "kontakt aufnehmen",
+            "kontaktformular",
+            "büro",
+            "adresse",
+            "postanschrift",
+            "bürozeiten",
             "wie erreiche ich euch",
             "wie kann ich euch erreichen"
         ],
@@ -54,7 +59,11 @@
             "mitarbeiterin",
             "wer arbeitet bei euch",
             "zuständige person",
-            "zuständigkeit"
+            "zuständigkeit",
+            "geschäftsführung",
+            "vorstand",
+            "geschäftsstelle",
+            "teamseite"
         ],
         "category": "team",
         "answer": "Für konkrete Ansprechpartner:innen kannst du die Team-Seite der Stiftung Bildung nutzen.",
@@ -164,6 +173,8 @@
             "ausschlusskriterien",
             "was ist ausgeschlossen",
             "was wird abgelehnt",
+            "förderung abgelehnt",
+            "bei der förderung abgelehnt",
             "nicht förderfähig",
             "keine förderung",
             "was bezahlt ihr nicht"
@@ -198,6 +209,12 @@
             "wie kann ich spenden",
             "unterstützen",
             "spendenkonto",
+            "spendenformular",
+            "online spende",
+            "spenden online",
+            "monatlich spenden",
+            "regelmäßig spenden",
+            "paypal",
             "finanziell helfen",
             "finanziell unterstützen",
             "finanzielle unterstützung",
@@ -249,6 +266,9 @@
             "was unterstützt ihr",
             "welche programme gibt es",
             "welche projekte gibt es",
+            "förderpreis",
+            "verein(t)",
+            "verein(t) für gute kita und schule",
             "aktivitäten",
             "initiativen"
         ],
@@ -267,6 +287,7 @@
             "geschäftsstelle",
             "rechtliche angaben",
             "wer ist verantwortlich",
+            "verantwortlich",
             "register",
             "vertretung"
         ],
@@ -282,6 +303,9 @@
             "seriös",
             "dzi",
             "phineo",
+            "initiative transparente zivilgesellschaft",
+            "transparente zivilgesellschaft",
+            "itz",
             "vertrauenswürdig",
             "auszeichnung",
             "siegel",
@@ -304,6 +328,8 @@
             "mitarbeiten",
             "unterstützen ohne geld",
             "zeit spenden",
+            "zeit spenden statt geld",
+            "statt geld",
             "engagement",
             "aktiv werden",
             "wie kann ich mithelfen"
@@ -311,5 +337,59 @@
         "category": "ehrenamt",
         "answer": "Du kannst dich auch ohne Geld ehrenamtlich engagieren - zum Beispiel über unser Mitmach-Portal 'Engagiert' oder im Bereich Ehrenamt. Jede helfende Hand zählt!",
         "source": "https://engagiert.stiftungbildung.org/"
+    },
+    {
+        "keywords": [
+            "jahresbericht",
+            "jahresberichte",
+            "finanzbericht",
+            "finanzberichte",
+            "transparenzbericht",
+            "bericht",
+            "fördermittel offengelegt",
+            "spendensiegel",
+            "transparenz",
+            "transparenz dokumente",
+            "wirkt siegel",
+            "dzi siegel"
+        ],
+        "category": "transparenz",
+        "answer": "Die Stiftung Bildung veröffentlicht regelmäßig Jahresberichte und Finanzübersichten. Außerdem ist sie mit dem DZI-Spendensiegel und dem PHINEO 'Wirkt'-Siegel ausgezeichnet.",
+        "source": "https://www.stiftungbildung.org/transparenz/"
+    },
+    {
+        "keywords": [
+            "youclub",
+            "youstartn",
+            "programme",
+            "projekte",
+            "angebote",
+            "förderprogramme",
+            "programm beschreibung",
+            "initiative",
+            "jugendprogramm",
+            "jugendprogramme",
+            "kita programm"
+        ],
+        "category": "programme",
+        "answer": "Die Stiftung Bildung unterstützt Programme wie youstartN und youclub sowie Förderfonds für Kita- und Schulprojekte. Diese Angebote fördern Engagement, Demokratie und Vielfalt in Bildungseinrichtungen.",
+        "source": "https://www.stiftungbildung.org/foerderung/"
+    },
+    {
+        "keywords": [
+            "förderantrag",
+            "antrag stellen",
+            "unterlagen für antrag",
+            "fristen",
+            "förderverfahren",
+            "status antrag",
+            "wieviel bekomme ich",
+            "antragsprozess",
+            "wie beantrage ich förderung"
+        ],
+        "category": "foerderung",
+        "answer": "Förderanträge für Kita- und Schulprojekte können online gestellt werden. Informationen zu Fristen, Unterlagen und Förderbedingungen findest du auf der Förderseite oder per E-Mail an die Förderberatung.",
+        "contact": "foerderanfrage@stiftungbildung.org",
+        "source": "https://www.stiftungbildung.org/foerderfonds/"
     }
 ]

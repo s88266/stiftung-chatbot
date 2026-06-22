@@ -29,6 +29,7 @@ interface TestCase {
 
 const FALLBACK_SOURCE = "https://www.stiftungbildung.org/kontakt/";
 const MIN_COMBINED_SCORE = 0.3;
+const USE_EMBEDDINGS = process.env.USE_EMBEDDINGS !== "false" && Boolean(process.env.HF_API_TOKEN);
 
 // Muss zur Serverlogik passen, damit die Tests dieselben Treffer bewerten.
 const KEYWORD_WEIGHT = 0.25;
@@ -134,6 +135,10 @@ function createSearchText(entry: KnowledgeEntry): string {
 
 // Lädt das Embedding-Modell und vektorisiert alle Wissenseinträge für den Testlauf.
 async function prepareKnowledgeBase(): Promise<EmbeddedKnowledgeEntry[]> {
+    if (!USE_EMBEDDINGS) {
+        return [];
+    }
+
     await initializeEmbeddings();
 
     return Promise.all(
@@ -154,6 +159,10 @@ async function getBestMatch(
 
     if (keywordMatch && keywordMatch.score > 0) {
         return keywordMatch.entry;
+    }
+
+    if (!USE_EMBEDDINGS) {
+        return null;
     }
 
     const userEmbedding = await createEmbedding(message);

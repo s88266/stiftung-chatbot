@@ -22,13 +22,84 @@ body {
 .page {
   min-height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-end;
+  justify-content: flex-end;
   background: linear-gradient(160deg, var(--cream) 0%, #fef0d4 100%);
   padding: 24px;
 }
 
+.chat-launcher {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 20;
+  min-height: 64px;
+  max-width: calc(100vw - 32px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px 10px 10px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--brand-teal);
+  color: #ffffff;
+  box-shadow: 0 14px 32px rgba(0, 96, 110, 0.24);
+  cursor: pointer;
+  font-family: var(--font-main);
+  text-align: left;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.chat-launcher:hover {
+  background: #00879a;
+  box-shadow: 0 18px 38px rgba(0, 96, 110, 0.3);
+}
+
+.chat-launcher:active {
+  transform: scale(0.98);
+}
+
+.launcher-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ffffff;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.launcher-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.launcher-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.launcher-text span {
+  font-size: 0.76rem;
+  opacity: 0.9;
+}
+
+.launcher-text strong {
+  font-size: 0.95rem;
+}
+
 .chat-card {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 30;
   /* Fester Chat-Rahmen für Desktop, auf Mobile bleibt die Höhe responsiv begrenzt */
   width: 100%;
   max-width: 480px;
@@ -41,10 +112,39 @@ body {
   flex-direction: column;
   overflow: hidden;
   border: 1px solid var(--border);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px) scale(0.98);
+  transform-origin: bottom right;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.chat-card.is-open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
 }
 
 /* Mobile: Vollbild-Chat ohne Card-Rahmen */
 @media (max-width: 600px) {
+  .page {
+    padding: 12px;
+  }
+
+  .chat-launcher {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .chat-card {
+    right: 12px;
+    bottom: 12px;
+    width: calc(100vw - 24px);
+    height: min(640px, calc(100svh - 24px));
+    max-height: calc(100svh - 24px);
+    border-radius: 18px;
+  }
+
   .chat-header {
     padding: 14px 16px;
   }
@@ -94,7 +194,7 @@ body {
   /* Gleicht das Logo links aus, damit der Header-Text optisch mittig steht */
   flex: 1;
   text-align: center;
-  padding-right: 58px;
+  min-width: 0;
 }
 
 .logo-badge {
@@ -133,9 +233,37 @@ body {
 }
 
 @media (max-width: 600px) {
-  .header-copy {
-    padding-right: 52px;
+  .logo-badge {
+    width: 40px;
+    height: 40px;
   }
+}
+
+.close-chat {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.36);
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  cursor: pointer;
+  font-family: var(--font-main);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.close-chat:hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.close-chat:active {
+  transform: scale(0.94);
 }
 
 /* Messages */

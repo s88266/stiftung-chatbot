@@ -144,11 +144,115 @@
     "expectedSource": "https://www.stiftungbildung.org/transparenz/"
   },
   {
-    "question": "Kann ich mich ehrenamtlich engagieren?",
+    "question": "Wo finde ich Jahresberichte oder Finanzberichte?",
+    "expectedSource": "https://www.stiftungbildung.org/transparenz/"
+  },
+  {
+    "question": "Was ist das PHINEO Wirkt-Siegel?",
+    "expectedSource": "https://www.stiftungbildung.org/transparenz/"
+  },
+  {
+    "question": "Welche Programme wie youstartN oder youclub gibt es?",
+    "expectedSource": "https://www.stiftungbildung.org/foerderung/"
+  },
+  {
+    "question": "Was bietet ihr für Jugendprogramme an?",
+    "expectedSource": "https://www.stiftungbildung.org/foerderung/"
+  },
+  {
+    "question": "Wie kann ich monatlich spenden?",
+    "expectedSource": "https://www.stiftungbildung.org/spenden/"
+  },
+  {
+    "question": "Kann ich per Online-Spendenformular spenden?",
+    "expectedSource": "https://www.stiftungbildung.org/spenden/"
+  },
+  {
+    "question": "Wie kann ich euch kontaktieren, wenn ich Fragen habe?",
+    "expectedSource": "https://www.stiftungbildung.org/kontakt/"
+  },
+  {
+    "question": "Haben Sie eine Kontaktadresse oder ein Kontaktformular?",
+    "expectedSource": "https://www.stiftungbildung.org/kontakt/"
+  },
+  {
+    "question": "Was wird bei der Förderung abgelehnt?",
+    "expectedSource": "https://www.stiftungbildung.org/foerderfonds/"
+  },
+  {
+    "question": "Wie beantrage ich eine Förderung für ein Schulprojekt?",
+    "expectedSource": "https://www.stiftungbildung.org/foerderfonds/"
+  },
+  {
+    "question": "Kann ich als Mentor oder Patin eine Patenschaft übernehmen?",
+    "expectedSource": "https://www.stiftungbildung.org/patenschaften/"
+  },
+  {
+    "question": "Kann ich ohne Geld helfen und mich engagieren?",
     "expectedSource": "https://engagiert.stiftungbildung.org/"
   },
   {
-    "question": "Wie kann ich freiwillig mithelfen, ohne Geld zu spenden?",
+    "question": "Wo finde ich euer Spendenkonto?",
+    "expectedSource": "https://www.stiftungbildung.org/spenden/"
+  },
+  {
+    "question": "Kann ich per Überweisung an die GLS Bank spenden?",
+    "expectedSource": "https://www.stiftungbildung.org/spenden/"
+  },
+  {
+    "question": "Ab welchem Betrag hilft eine monatliche Spende besonders?",
+    "expectedSource": "https://www.stiftungbildung.org/spenden/"
+  },
+  {
+    "question": "Reicht bei kleinen Spenden ein vereinfachter Zuwendungsnachweis?",
+    "expectedSource": "https://www.stiftungbildung.org/spenden/"
+  },
+  {
+    "question": "An wen schreibe ich wegen einer Spendenbescheinigung?",
+    "expectedSource": "https://www.stiftungbildung.org/spenden/"
+  },
+  {
+    "question": "Wie viel Fördergeld kann ein Kita- oder Schulprojekt bekommen?",
+    "expectedSource": "https://www.stiftungbildung.org/foerderfonds/"
+  },
+  {
+    "question": "Können Kita-Fördervereine Fördermittel beantragen?",
+    "expectedSource": "https://www.stiftungbildung.org/foerderfonds/"
+  },
+  {
+    "question": "Welche Förderkriterien gelten für Projektanträge?",
+    "expectedSource": "https://www.stiftungbildung.org/foerderfonds/"
+  },
+  {
+    "question": "Wo finde ich Informationen zu Fristen und Unterlagen für einen Förderantrag?",
+    "expectedSource": "https://www.stiftungbildung.org/foerderfonds/"
+  },
+  {
+    "question": "Was sind Chancenpatenschaften?",
+    "expectedSource": "https://www.stiftungbildung.org/patenschaften/"
+  },
+  {
+    "question": "Wie viele Kinder und Jugendliche wurden durch Chancenpatenschaften gefördert?",
+    "expectedSource": "https://www.stiftungbildung.org/patenschaften/"
+  },
+  {
+    "question": "Was bedeutet die Initiative Transparente Zivilgesellschaft?",
+    "expectedSource": "https://www.stiftungbildung.org/transparenz/"
+  },
+  {
+    "question": "Habt ihr das DZI-Spendensiegel?",
+    "expectedSource": "https://www.stiftungbildung.org/transparenz/"
+  },
+  {
+    "question": "Wer ist für die Stiftung Bildung verantwortlich?",
+    "expectedSource": "https://www.stiftungbildung.org/impressum/"
+  },
+  {
+    "question": "Gibt es den Förderpreis Verein(t) für gute Kita und Schule?",
+    "expectedSource": "https://www.stiftungbildung.org/foerderung/"
+  },
+  {
+    "question": "Wie kann ich Zeit spenden statt Geld?",
     "expectedSource": "https://engagiert.stiftungbildung.org/"
   },
   {

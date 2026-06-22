@@ -21,6 +21,9 @@ interface ChatResponse {
 }
 
 function App() {
+  // Steuert, ob der Chat sichtbar ist oder nur der Launcher-Button angezeigt wird.
+  const [chatOpen, setChatOpen] = useState<boolean>(false);
+
   // Chatverlauf als Nachrichtenliste.
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -101,16 +104,42 @@ function App() {
 
   return (
     <div className="page">
-      <div className="chat-card">
-        <header className="chat-header">
-          <div className="logo-badge" aria-hidden="true">
+      {!chatOpen && (
+        <button
+          className="chat-launcher"
+          type="button"
+          onClick={() => setChatOpen(true)}
+          aria-label="Chat der Stiftung Bildung öffnen"
+        >
+          <span className="launcher-logo" aria-hidden="true">
             <img src={stiftungLogo} alt="" />
-          </div>
-          <div className="header-copy">
-            <h1>Stiftung Bildung</h1>
-            <p>Chatbot &mdash; Fragen rund um unsere Arbeit</p>
-          </div>
-        </header>
+          </span>
+          <span className="launcher-text">
+            <span>Stiftung Bildung</span>
+            <strong>Chat öffnen</strong>
+          </span>
+        </button>
+      )}
+
+      {chatOpen && (
+        <div className="chat-card is-open">
+          <header className="chat-header">
+            <div className="logo-badge" aria-hidden="true">
+              <img src={stiftungLogo} alt="" />
+            </div>
+            <div className="header-copy">
+              <h1>Stiftung Bildung</h1>
+              <p>Chatbot &mdash; Fragen rund um unsere Arbeit</p>
+            </div>
+            <button
+              className="close-chat"
+              type="button"
+              onClick={() => setChatOpen(false)}
+              aria-label="Chat schließen"
+            >
+              x
+            </button>
+          </header>
 
         <div className="chat-messages">
           {messages.map((msg, index) => (
@@ -172,7 +201,8 @@ function App() {
             ➤
           </button>
         </div>
-      </div>
+        </div>
+      )}
     </div>
   );
 }
