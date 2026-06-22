@@ -66,6 +66,9 @@ const FALLBACK_ENTRY: KnowledgeEntry = {
 const MIN_CONFIDENCE = 0.1;
 const MIN_COMBINED_SCORE = 0.3;
 
+const USE_EMBEDDINGS = process.env.USE_EMBEDDINGS !== "false";
+let embeddingsAvailable = USE_EMBEDDINGS;
+
 // Gewichtung für die semantische Suche:
 // Embeddings tragen den Hauptteil, Keyword-Treffer geben bei exakten Begriffen einen Bonus.
 const KEYWORD_WEIGHT = 0.25;
@@ -248,6 +251,17 @@ app.post("/chat", async (req: Request<{}, {}, ChatRequestBody>, res: Response) =
         });
     }
 
+    if (!USE_EMBEDDINGS || !embeddingsAvailable) {
+        console.log("Embeddings disabled oder nicht verfügbar. Verwende nur Keyword-Suche.");
+        return res.json({
+            answer: FALLBACK_ENTRY.answer,
+            source: FALLBACK_ENTRY.source,
+            contact: FALLBACK_ENTRY.contact,
+            confidence: 0,
+            matchType: "fallback",
+        });
+    }
+
     // Wenn kein Keyword passt, übernimmt die semantische Suche über Embeddings.
     const userEmbedding = await createEmbedding(userMessage);
 
@@ -324,21 +338,31 @@ app.post("/chat", async (req: Request<{}, {}, ChatRequestBody>, res: Response) =
 
 // Backend-Server auf Port 3001 starten.
 async function startServer() {
-    await initializeEmbeddings();
+    if (USE_EMBEDDINGS) {
+        try {
+            await initializeEmbeddings();
 
-    // Beim Start werden alle Wissenseinträge einmal vektorisiert.
-    // Dadurch muss pro Anfrage nur noch die Nutzerfrage neu eingebettet werden.
-    embeddedKnowledgeBase = await Promise.all(
-        knowledgeBase.map(async (entry) => {
-            const searchText = createSearchText(entry);
+            // Beim Start werden alle Wissenseinträge einmal vektorisiert.
+            // Dadurch muss pro Anfrage nur noch die Nutzerfrage neu eingebettet werden.
+            embeddedKnowledgeBase = await Promise.all(
+                knowledgeBase.map(async (entry) => {
+                    const searchText = createSearchText(entry);
 
-            return {
-                ...entry,
-                searchText,
-                embedding: await createEmbedding(searchText),
-            };
-        })
-    );
+                    return {
+                        ...entry,
+                        searchText,
+                        embedding: await createEmbedding(searchText),
+                    };
+                })
+            );
+        } catch (error) {
+            embeddingsAvailable = false;
+            console.error("Fehler beim Laden der Embeddings, semantische Suche deaktiviert:", error);
+        }
+    } else {
+        embeddingsAvailable = false;
+        console.log("USE_EMBEDDINGS=false gesetzt: Semantische Suche deaktiviert.");
+    }
 
     const PORT = process.env.PORT || 3001;
 
