@@ -2,7 +2,7 @@
 
 Dieses Projekt ist ein Chatbot-Prototyp für die Stiftung Bildung. Das Frontend stellt eine Chat-Oberfläche bereit, das Backend beantwortet Fragen anhand einer lokalen Wissensbasis (`knowledgeBase.json`).
 
-Der aktuelle Stand nutzt eine Hybrid-Suche: Zuerst werden direkte Keyword-Treffer geprüft, danach vergleicht eine lokale Embedding-Suche die Bedeutung der Frage mit den Wissenseinträgen. Dafür wird `@huggingface/transformers` lokal im Backend verwendet; es wird keine externe KI-API aufgerufen.
+Der aktuelle Stand nutzt eine Hybrid-Suche: Zuerst werden direkte Keyword-Treffer geprüft, danach vergleicht eine Embedding-Suche die Bedeutung der Frage mit den Wissenseinträgen. Dafür wird die Hugging Face Inference API im Backend verwendet, damit der Server kein großes Modell lokal laden muss.
 
 ## Vorschau
 
@@ -66,7 +66,7 @@ stiftung-chatbot/
 ### Backend
 
 - `backend/server.ts`: Startet den Express-Server auf Port `3001`, aktiviert CORS und JSON-Parsing, nimmt Chat-Anfragen unter `/chat` entgegen und sucht die beste Antwort in der Wissensbasis.
-- `backend/embedding.ts`: Lädt das lokale HuggingFace-Modell, erstellt Embeddings für Texte und vergleicht sie per Cosine Similarity.
+- `backend/embedding.ts`: Erzeugt Embeddings über die Hugging Face Inference API, erstellt Textvektoren und vergleicht sie per Cosine Similarity.
 - `backend/knowledgeBase.json`: Enthält die Antworten des Chatbots. Jeder Eintrag besteht aus Keywords, Kategorie, Antworttext, Quelle und optional einer Kontaktadresse. Die Keywords enthalten auch Synonyme und typische Fragevarianten, z. B. zur Gründung der Stiftung Bildung am 24.09.2012.
 - `backend/test.ts`: Führt Testfragen aus und prüft mit derselben Hybrid-Logik wie der Server, ob die jeweils erwartete Quelle gefunden wird.
 - `backend/testQuestions.json`: Sammlung von Testfragen mit erwarteter Quelle, darunter Synonym- und Fallback-Fälle.
@@ -101,6 +101,29 @@ npm install
 cd ../frontend
 npm install
 ```
+
+### Hugging Face Inference API
+
+Für die semantische Suche mit Embeddings benötigt das Backend eine Hugging Face Inference API-Variable:
+
+- `HF_API_TOKEN`: Dein Hugging Face API-Token.
+- optional `HF_MODEL`: Der Modellname für Embeddings. Standard: `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`.
+
+Beispiel in Render oder lokal:
+
+```bash
+export HF_API_TOKEN="hf_..."
+export HF_MODEL="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+```
+
+Unter Windows PowerShell:
+
+```powershell
+$env:HF_API_TOKEN="hf_..."
+$env:HF_MODEL="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+```
+
+Wenn `HF_API_TOKEN` nicht gesetzt ist, deaktiviert das Backend die Embedding-Suche und verwendet nur die Keyword-Suche.
 
 ## Entwicklung starten
 
@@ -140,7 +163,7 @@ http://localhost:5173
 
 ## Tests
 
-Die Backend-Tests prüfen, ob Beispiel-Fragen, Synonyme und unpassende Fragen zur richtigen Quelle oder zum Fallback führen. Beim Testlauf wird das lokale Embedding-Modell geladen; der erste Lauf kann deshalb etwas länger dauern.
+Die Backend-Tests prüfen, ob Beispiel-Fragen, Synonyme und unpassende Fragen zur richtigen Quelle oder zum Fallback führen. Beim Testlauf wird die Hugging Face Inference API verwendet; der erste Lauf kann deshalb etwas länger dauern.
 
 ```bash
 cd backend

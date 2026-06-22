@@ -338,6 +338,12 @@ app.post("/chat", async (req: Request<{}, {}, ChatRequestBody>, res: Response) =
 
 // Backend-Server auf Port 3001 starten.
 async function startServer() {
+    if (USE_EMBEDDINGS && !process.env.HF_API_TOKEN) {
+        embeddingsAvailable = false;
+        console.warn(
+            "HF_API_TOKEN nicht gesetzt. Semantische Suche (Embeddings) wird deaktiviert. Setze HF_API_TOKEN, um die Inference API zu nutzen."
+        );
+    }
     if (USE_EMBEDDINGS) {
         try {
             await initializeEmbeddings();
