@@ -228,8 +228,8 @@ Beispiel-Snippet für WordPress, z. B. in WPCode oder einem HTML-Block:
     #stiftung-chatbot-widget {
       right: 12px;
       bottom: 12px;
-      width: 88px;
-      height: 88px;
+      width: 300px;
+      height: 112px;
     }
 
     #stiftung-chatbot-widget.is-open {

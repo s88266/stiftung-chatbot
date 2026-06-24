@@ -29,7 +29,7 @@ function getWidgetSize(chatOpen: boolean) {
     : screenWidth > screenHeight && shortSide <= 480;
 
   if (!chatOpen) {
-    return isSmallLandscape ? { width: 88, height: 88 } : { width: 300, height: 112 };
+    return { width: 300, height: 112 };
   }
 
   const sideGap = shortSide <= 480 ? 16 : 48;
