@@ -35,8 +35,8 @@ function getWidgetSize(chatOpen: boolean) {
   const sideGap = shortSide <= 480 ? 16 : 48;
 
   return {
-    width: Math.min(isSmallLandscape ? 480 : 520, Math.max(320, screenWidth - sideGap)),
-    height: Math.min(isSmallLandscape ? screenHeight - 16 : 700, Math.max(320, screenHeight - sideGap)),
+    width: Math.min(isSmallLandscape ? 480 : 360, Math.max(320, screenWidth - sideGap)),
+    height: Math.min(isSmallLandscape ? screenHeight - 16 : 470, Math.max(320, screenHeight - sideGap)),
   };
 }
 
