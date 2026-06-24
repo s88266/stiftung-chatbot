@@ -21,7 +21,7 @@ body {
 
 .page {
   min-height: 0;
-  background: transparent;
+  background: transparent !important;
 }
 
 .chat-launcher {

@@ -13,6 +13,7 @@ Der aktuelle Stand nutzt eine Hybrid-Suche: Zuerst werden direkte Keyword-Treffe
 - Chat-Oberfläche mit Startnachricht, Eingabefeld und Ladeanzeige
 - Stiftung-Bildung-Logo im Header und als Bot-Avatar
 - Design mit Stiftung-Bildung-Farben, Lucida-Sans-Unicode-Schrift und responsive Darstellung
+- Einbettung als transparentes WordPress-Widget: geschlossen ist nur der Button unten rechts sichtbar, erst beim Öffnen wird das Chatfenster groß
 - Senden per Button oder Enter-Taste
 - Kommunikation vom Frontend zum Backend über `POST http://localhost:3001/chat`
 - Keyword-Matching für direkte Treffer
@@ -76,10 +77,10 @@ stiftung-chatbot/
 
 ### Frontend
 
-- `frontend/src/App.tsx`: Hauptkomponente der Chat-App. Verwaltet Nachrichten, Eingabe, Ladezustand, automatisches Scrollen und ruft das Backend auf.
-- `frontend/src/App.css`: Styling für Chatkarte, Nachrichtenblasen, Header, Eingabebereich, Ladepunkte und mobile Ansicht. Enthält die aktuellen Markenfarben, Logo-Darstellung und Lucida-Sans-Unicode-Schrift.
+- `frontend/src/App.tsx`: Hauptkomponente der Chat-App. Verwaltet Nachrichten, Eingabe, Ladezustand, automatisches Scrollen, ruft das Backend auf und meldet der einbettenden Website per `postMessage`, ob das iframe klein oder groß sein soll.
+- `frontend/src/App.css`: Styling für Chatkarte, Launcher-Button, Nachrichtenblasen, Header, Eingabebereich, Ladepunkte und mobile Ansicht. Enthält die aktuellen Markenfarben, Logo-Darstellung, transparente Widget-Fläche und Lucida-Sans-Unicode-Schrift.
 - `frontend/src/main.tsx`: Einstiegspunkt der React-App. Rendert `App` in das HTML-Element `#root`.
-- `frontend/src/index.css`: Globale Basisstyles für die Vite/React-Anwendung.
+- `frontend/src/index.css`: Globale Basisstyles für die Vite/React-Anwendung. Der App-Hintergrund bleibt transparent und erzwingt `color-scheme: light`, damit im iframe kein dunkler Browser-Hintergrund erscheint.
 - `frontend/src/assets/`: Bild- und SVG-Dateien für das Frontend, darunter das Stiftung-Bildung-Logo und der Screenshot des Prototyps.
 - `frontend/public/favicon.svg`: Browser-Icon der Anwendung.
 - `frontend/public/icons.svg`: Öffentliche Icon-Datei.
@@ -185,6 +186,69 @@ Frontend bauen:
 cd frontend
 npm run build
 ```
+
+## WordPress-Einbindung
+
+Das Frontend ist als kleines Widget gedacht. Im geschlossenen Zustand soll das iframe nur so groß wie der Launcher-Button sein, damit keine unsichtbare oder dunkle Fläche über der Website liegt. Beim Öffnen sendet die React-App per `postMessage` neue Maße an WordPress.
+
+Beispiel-Snippet für WordPress, z. B. in WPCode oder einem HTML-Block:
+
+```html
+<style>
+  #stiftung-chatbot-widget {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    width: 260px;
+    height: 96px;
+    border: none;
+    z-index: 999999;
+    overflow: visible;
+    background: transparent !important;
+    color-scheme: light;
+  }
+
+  @media (max-width: 600px) {
+    #stiftung-chatbot-widget {
+      right: 16px;
+      bottom: 16px;
+      width: 240px;
+      height: 96px;
+    }
+
+    #stiftung-chatbot-widget.is-open {
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+</style>
+
+<iframe
+  id="stiftung-chatbot-widget"
+  src="https://stiftung-chatbot-frontend.onrender.com/"
+  allowtransparency="true"
+></iframe>
+
+<script>
+  window.addEventListener("message", function (event) {
+    if (!event.data || event.data.type !== "stiftung-chatbot:size") return;
+
+    const frame = document.getElementById("stiftung-chatbot-widget");
+    frame.style.width = event.data.width + "px";
+    frame.style.height = event.data.height + "px";
+
+    if (event.data.open) {
+      frame.classList.add("is-open");
+    } else {
+      frame.classList.remove("is-open");
+    }
+  });
+</script>
+```
+
+Wichtig: Das iframe selbst sollte keinen eigenen Schatten, keine feste Höhe von 600px und keinen sichtbaren Hintergrund bekommen. Diese Darstellung übernimmt die Chat-App im geöffneten Zustand selbst.
 
 ## Hinweise zum aktuellen Stand
 
