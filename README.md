@@ -199,8 +199,8 @@ Beispiel-Snippet für WordPress, z. B. in WPCode oder einem HTML-Block:
     position: fixed;
     right: 24px;
     bottom: 24px;
-    width: 260px;
-    height: 96px;
+    width: 300px;
+    height: 112px;
     border: none;
     z-index: 999999;
     overflow: visible;
@@ -212,8 +212,8 @@ Beispiel-Snippet für WordPress, z. B. in WPCode oder einem HTML-Block:
     #stiftung-chatbot-widget {
       right: 16px;
       bottom: 16px;
-      width: 240px;
-      height: 96px;
+      width: 280px;
+      height: 112px;
     }
 
     #stiftung-chatbot-widget.is-open {
