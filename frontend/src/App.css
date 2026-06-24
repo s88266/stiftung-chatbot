@@ -20,12 +20,8 @@ body {
 }
 
 .page {
-  min-height: 100vh;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  background: linear-gradient(160deg, var(--cream) 0%, #fef0d4 100%);
-  padding: 24px;
+  min-height: 0;
+  background: transparent;
 }
 
 .chat-launcher {
@@ -127,10 +123,6 @@ body {
 
 /* Mobile: Vollbild-Chat ohne Card-Rahmen */
 @media (max-width: 600px) {
-  .page {
-    padding: 12px;
-  }
-
   .chat-launcher {
     right: 16px;
     bottom: 16px;

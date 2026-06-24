@@ -46,6 +46,19 @@ function App() {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
+  // Meldet der einbettenden Website, wie groß das Chat-iframe sein soll.
+  useEffect(() => {
+    window.parent?.postMessage(
+      {
+        type: "stiftung-chatbot:size",
+        width: chatOpen ? 520 : 260,
+        height: chatOpen ? 700 : 96,
+        open: chatOpen,
+      },
+      "*"
+    );
+  }, [chatOpen]);
+
   // Senden der Benutzer-Nachricht an das Backend und Hinzufügen der Antwort zum Chat.
   async function sendMessage() {
     if (!input.trim() || loading) return;
