@@ -20,6 +20,26 @@ interface ChatResponse {
   contact?: string;
 }
 
+function getWidgetSize(chatOpen: boolean) {
+  const screenWidth = window.screen?.width || window.screen?.availWidth || 1200;
+  const screenHeight = window.screen?.height || window.screen?.availHeight || 900;
+  const shortSide = Math.min(screenWidth, screenHeight);
+  const isSmallLandscape = chatOpen
+    ? screenWidth > screenHeight && screenHeight <= 480
+    : screenWidth > screenHeight && shortSide <= 480;
+
+  if (!chatOpen) {
+    return isSmallLandscape ? { width: 88, height: 88 } : { width: 260, height: 96 };
+  }
+
+  const sideGap = shortSide <= 480 ? 16 : 48;
+
+  return {
+    width: Math.min(isSmallLandscape ? 480 : 520, Math.max(320, screenWidth - sideGap)),
+    height: Math.min(isSmallLandscape ? screenHeight - 16 : 700, Math.max(320, screenHeight - sideGap)),
+  };
+}
+
 function App() {
   // Steuert, ob der Chat sichtbar ist oder nur der Launcher-Button angezeigt wird.
   const [chatOpen, setChatOpen] = useState<boolean>(false);
@@ -48,15 +68,25 @@ function App() {
 
   // Meldet der einbettenden Website, wie groß das Chat-iframe sein soll.
   useEffect(() => {
-    window.parent?.postMessage(
-      {
-        type: "stiftung-chatbot:size",
-        width: chatOpen ? 520 : 260,
-        height: chatOpen ? 700 : 96,
-        open: chatOpen,
-      },
-      "*"
-    );
+    const postWidgetSize = () => {
+      window.parent?.postMessage(
+        {
+          type: "stiftung-chatbot:size",
+          ...getWidgetSize(chatOpen),
+          open: chatOpen,
+        },
+        "*"
+      );
+    };
+
+    postWidgetSize();
+    window.addEventListener("resize", postWidgetSize);
+    window.visualViewport?.addEventListener("resize", postWidgetSize);
+
+    return () => {
+      window.removeEventListener("resize", postWidgetSize);
+      window.visualViewport?.removeEventListener("resize", postWidgetSize);
+    };
   }, [chatOpen]);
 
   // Senden der Benutzer-Nachricht an das Backend und Hinzufügen der Antwort zum Chat.

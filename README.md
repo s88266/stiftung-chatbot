@@ -223,6 +223,20 @@ Beispiel-Snippet für WordPress, z. B. in WPCode oder einem HTML-Block:
       height: 100%;
     }
   }
+
+  @media (orientation: landscape) and (max-height: 480px) {
+    #stiftung-chatbot-widget {
+      right: 12px;
+      bottom: 12px;
+      width: 88px;
+      height: 88px;
+    }
+
+    #stiftung-chatbot-widget.is-open {
+      right: 8px;
+      bottom: 8px;
+    }
+  }
 </style>
 
 <iframe

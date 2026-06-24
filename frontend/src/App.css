@@ -172,6 +172,96 @@ body {
   }
 }
 
+/* Kleine Handy-Displays im Querformat, z. B. iPhone 11 landscape */
+@media (orientation: landscape) and (max-height: 480px) {
+  .chat-launcher {
+    right: 12px;
+    bottom: 12px;
+    min-height: 64px;
+    width: 64px;
+    max-width: 64px;
+    padding: 10px;
+    justify-content: center;
+  }
+
+  .launcher-logo {
+    width: 44px;
+    height: 44px;
+  }
+
+  .launcher-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .chat-card {
+    right: 8px;
+    bottom: 8px;
+    width: calc(100vw - 16px);
+    max-width: 480px;
+    height: calc(100svh - 16px);
+    max-height: calc(100svh - 16px);
+    border-radius: 16px;
+  }
+
+  .chat-header {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .logo-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .chat-header h1 {
+    font-size: 1rem;
+  }
+
+  .chat-header p {
+    display: none;
+  }
+
+  .close-chat {
+    width: 32px;
+    height: 32px;
+  }
+
+  .chat-messages {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .message-row {
+    max-width: 92%;
+  }
+
+  .bubble {
+    padding: 9px 12px;
+    font-size: 0.86rem;
+    line-height: 1.35;
+  }
+
+  .chat-input {
+    padding: 10px;
+  }
+
+  .chat-input input {
+    padding: 10px 14px;
+    font-size: 1rem;
+  }
+
+  .chat-input button {
+    width: 40px;
+    height: 40px;
+  }
+}
+
 /* Header */
 .chat-header {
   background: var(--brand-teal);
