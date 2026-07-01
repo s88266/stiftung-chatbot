@@ -1,6 +1,11 @@
 import knowledgeBase from "./knowledgeBase.json";
 import testQuestions from "./testQuestions.json";
-import { initializeEmbeddings, createEmbedding, cosineSimilarity } from "./embedding";
+import {
+    initializeEmbeddings,
+    createEmbedding,
+    cosineSimilarity,
+    hasEmbeddingCredentials,
+} from "./embedding";
 
 // Struktur der Einträge aus der Wissensbasis.
 interface KnowledgeEntry {
@@ -29,7 +34,7 @@ interface TestCase {
 
 const FALLBACK_SOURCE = "https://www.stiftungbildung.org/kontakt/";
 const MIN_COMBINED_SCORE = 0.3;
-const USE_EMBEDDINGS = process.env.USE_EMBEDDINGS !== "false" && Boolean(process.env.HF_API_TOKEN);
+const USE_EMBEDDINGS = process.env.USE_EMBEDDINGS !== "false" && hasEmbeddingCredentials();
 
 // Muss zur Serverlogik passen, damit die Tests dieselben Treffer bewerten.
 const KEYWORD_WEIGHT = 0.25;

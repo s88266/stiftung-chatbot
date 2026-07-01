@@ -1,7 +1,13 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import knowledgeBase from "./knowledgeBase.json";
-import { initializeEmbeddings, createEmbedding, cosineSimilarity } from "./embedding";
+import {
+    initializeEmbeddings,
+    createEmbedding,
+    cosineSimilarity,
+    hasEmbeddingCredentials,
+    getEmbeddingProviderName,
+} from "./embedding";
 // Struktur der Wissenseinträge in knowledgeBase.json.
 
 interface KnowledgeEntry {
@@ -263,7 +269,21 @@ app.post("/chat", async (req: Request<{}, {}, ChatRequestBody>, res: Response) =
     }
 
     // Wenn kein Keyword passt, übernimmt die semantische Suche über Embeddings.
-    const userEmbedding = await createEmbedding(userMessage);
+    let userEmbedding: number[];
+
+    try {
+        userEmbedding = await createEmbedding(userMessage);
+    } catch (error) {
+        console.error("Fehler beim Erstellen des Nutzer-Embeddings:", error);
+
+        return res.json({
+            answer: FALLBACK_ENTRY.answer,
+            source: FALLBACK_ENTRY.source,
+            contact: FALLBACK_ENTRY.contact,
+            confidence: 0,
+            matchType: "fallback",
+        });
+    }
 
     let bestMatch: EmbeddedKnowledgeEntry | null = null;
     let bestCombinedScore = -1;
@@ -338,13 +358,14 @@ app.post("/chat", async (req: Request<{}, {}, ChatRequestBody>, res: Response) =
 
 // Backend-Server auf Port 3001 starten.
 async function startServer() {
-    if (USE_EMBEDDINGS && !process.env.HF_API_TOKEN) {
+    if (USE_EMBEDDINGS && !hasEmbeddingCredentials()) {
         embeddingsAvailable = false;
         console.warn(
-            "HF_API_TOKEN nicht gesetzt. Semantische Suche (Embeddings) wird deaktiviert. Setze HF_API_TOKEN, um die Inference API zu nutzen."
+            `Keine Embedding-Zugangsdaten fuer Provider "${getEmbeddingProviderName()}" gesetzt. ` +
+            "Semantische Suche wird deaktiviert. Setze HF_API_TOKEN oder OPENAI_API_KEY."
         );
     }
-    if (USE_EMBEDDINGS) {
+    if (USE_EMBEDDINGS && embeddingsAvailable) {
         try {
             await initializeEmbeddings();
 
@@ -365,6 +386,8 @@ async function startServer() {
             embeddingsAvailable = false;
             console.error("Fehler beim Laden der Embeddings, semantische Suche deaktiviert:", error);
         }
+    } else if (USE_EMBEDDINGS) {
+        console.log("Semantische Suche deaktiviert. Verwende nur Keyword-Suche.");
     } else {
         embeddingsAvailable = false;
         console.log("USE_EMBEDDINGS=false gesetzt: Semantische Suche deaktiviert.");
