@@ -2,8 +2,7 @@
     {
         "keywords": [
             "spenden",
-            "spende",
-            "geld"
+            "spende"
         ],
         "category": "spenden",
         "answer": "Informationen zum Spenden findest du auf der Website der Stiftung Bildung im Bereich Spenden.",
@@ -159,6 +158,11 @@
             "projektgeld beantragen",
             "finanzierung für schulprojekt",
             "unterstützung für schulprojekt",
+            "schule plant eine aktion",
+            "schule braucht geld",
+            "aktion braucht geld",
+            "geld für aktion",
+            "finanzierung für aktion",
             "fördermittel erhalten",
             "antrag stellen"
         ],
