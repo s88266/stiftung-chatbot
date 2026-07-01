@@ -5,6 +5,7 @@ type EmbeddingProvider = "huggingface" | "openai";
 
 const HF_API_TOKEN = process.env.HF_API_TOKEN || "";
 const HF_MODEL = process.env.HF_MODEL || "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2";
+const HF_API_BASE_URL = process.env.HF_API_BASE_URL || "https://router.huggingface.co/hf-inference";
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY || "";
 const OPENAI_EMBEDDING_MODEL = process.env.OPENAI_EMBEDDING_MODEL || "text-embedding-3-small";
@@ -61,7 +62,7 @@ async function createHuggingFaceEmbedding(text: string): Promise<number[]> {
         throw new Error("HF_API_TOKEN fehlt. Setze die Umgebungsvariable fuer die Hugging Face Inference API.");
     }
 
-    const url = `https://api-inference.huggingface.co/pipeline/feature-extraction/${encodeURIComponent(HF_MODEL)}`;
+    const url = `${HF_API_BASE_URL}/models/${encodeURIComponent(HF_MODEL)}/pipeline/feature-extraction`;
 
     const resp = await fetch(url, {
         method: "POST",
